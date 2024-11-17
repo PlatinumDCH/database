@@ -23,8 +23,8 @@ class MyConnection:
         cursor.execute(query,params)
         return cursor.fetchall()
 
-    def fetch_all_users(self) -> list:
-        return self.execute_query('SELECT * FROM Users')
+    def fetch_all_users(self,form_sql:str) -> list:
+        return self.execute_query(form_sql)
 
     def __enter__(self):
         """User for automat connection-close [with]"""
