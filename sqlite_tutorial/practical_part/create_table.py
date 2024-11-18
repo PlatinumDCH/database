@@ -16,7 +16,7 @@ def read_sql_file(file_path):
         return None
 
 if __name__ == '__main__':
-    sql_file_path = Path() / 'form_create_table.sql'
+    sql_file_path = Path('form_create_table.sql')
     sql_queries = read_sql_file(sql_file_path)
     if sql_queries:
         with MyConnection() as db:
