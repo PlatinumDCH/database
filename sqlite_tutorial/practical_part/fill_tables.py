@@ -12,11 +12,16 @@ def create_random_students(groups_ids:list[int])->tuple:
     groups_id:int = choice(groups_ids)
     return first_name, last_name, enrollment, groups_id
 
+def create_random_teacher()->tuple[str,str]:
+    first_name = faker.first_name()
+    last_name = faker.last_name()
+    return first_name, last_name
 
 name_groups = ['Group-A', 'Group-B', 'Group-C']
 form_query = 'INSERT INTO Groups (name_group) VALUES (?)'
 
 form_students = 'INSERT INTO Students (firstname, lastname, enrollment, group_id) VALUES (?,?,?,?)'
+form_teachers = 'INSERT INTO Teachers (firstname, lastname) VALUES (?,?)'
 
 def fill_table_groups(c:Cursor,sql_query:str, list_groups:list[str],size_table:int):
     for _ in range(size_table):
@@ -34,13 +39,14 @@ def get_groups_id(c:Cursor)->list[int]:
     rows = c.fetchall()
     return [row[0] for row in rows]
 
+def fill_table_teachers(c:Cursor,sql_query:str, size_table:int):
+    for _ in range(size_table):
+        c.execute(sql_query, create_random_teacher())
 
 if __name__ == '__main__':
 
     with MyConnection() as db:
         cursor = db.get_cursor()
-        fill_table_groups(cursor,form_query,name_groups,3)
-        db.conn.commit()
-        fill_table_students(cursor,form_students,50)
+
 
 
