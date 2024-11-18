@@ -26,6 +26,11 @@ class MyConnection:
     def fetch_all_users(self,form_sql:str) -> list:
         return self.execute_query(form_sql)
 
+    def process_execute(self,form:str, param:tuple=()):
+        c = self.get_cursor()
+        c.execute(form, param)
+
+
     def __enter__(self):
         """User for automat connection-close [with]"""
         return self
