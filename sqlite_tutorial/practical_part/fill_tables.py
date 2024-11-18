@@ -20,8 +20,9 @@ def create_random_teacher()->tuple[str,str]:
 name_groups = ['Group-A', 'Group-B', 'Group-C']
 form_query = 'INSERT INTO Groups (name_group) VALUES (?)'
 
-form_students = 'INSERT INTO Students (firstname, lastname, enrollment, group_id) VALUES (?,?,?,?)'
-form_teachers = 'INSERT INTO Teachers (firstname, lastname) VALUES (?,?)'
+form_students = 'INSERT INTO Students (firstname, lastname, enrollment, group_id) VALUES (?, ?, ?, ?)'
+form_teachers = 'INSERT INTO Teachers (firstname, lastname) VALUES (?, ?)'
+form_subject = 'INSERT INTO Subjects (name, teacher_id) VALUES (?, ?)'
 
 def fill_table_groups(c:Cursor,sql_query:str, list_groups:list[str],size_table:int):
     for _ in range(size_table):
@@ -39,14 +40,28 @@ def get_groups_id(c:Cursor)->list[int]:
     rows = c.fetchall()
     return [row[0] for row in rows]
 
+def get_teachers_id(c:Cursor)->list[int]:
+    c.execute('SELECT id From Teachers')
+    rows = c.fetchall()
+    return [row[0] for row in rows]
+
 def fill_table_teachers(c:Cursor,sql_query:str, size_table:int):
     for _ in range(size_table):
         c.execute(sql_query, create_random_teacher())
+
+def fill_table_subject(c:Cursor, sql_query:str, size_table:int):
+    subjects = ['Math', 'Science', 'English', 'History', 'Geography']
+    teachers_ids = get_teachers_id(c)
+    for _ in range(size_table):
+        subject = choice(subjects)
+        teachers_id = choice(teachers_ids)
+        c.execute(sql_query, (subject,teachers_id))
 
 if __name__ == '__main__':
 
     with MyConnection() as db:
         cursor = db.get_cursor()
+        fill_table_subject(cursor, form_subject, 8)
 
 
 
