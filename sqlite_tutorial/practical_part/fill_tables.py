@@ -1,9 +1,14 @@
+import phonenumbers
+
 from connect import MyConnection
 from random import choice
 from sqlite3 import Cursor
 from faker import Faker
+from phonenumbers import PhoneNumberType, PhoneNumberFormat, national_significant_number
 
 from forms_iclude import name_groups, form_groups, form_students, form_teachers, form_subject, form_grade
+from forms_iclude import form_contact_student, form_contact_teacher
+
 faker = Faker()
 
 def create_random_students(groups_ids:list[int])->tuple:
@@ -24,9 +29,22 @@ def create_random_grade()->int:
 def create_random_data()->str:
     return faker.date(pattern='%Y-%m-%d')
 
+def create_mail()->str:
+    return faker.email()
+
+
+def generate_number():
+    country_code = faker.country_code(representation='alpha-2').upper()
+
+    sample_number_obj = phonenumbers.example_number_for_type(country_code, PhoneNumberType.MOBILE)
+    national_number_length = len(national_significant_number(sample_number_obj))
+
+    number_obj = phonenumbers.parse(str(Faker().random_number(national_number_length)), country_code)
+    number = phonenumbers.format_number(number_obj, phonenumbers.PhoneNumberFormat.E164)
+    return number
 
 def get_id(c:Cursor, name_table:str)->list[int]:
-    c.execute(f'SELECT id From {name_table.title}')
+    c.execute(f'SELECT id From {name_table.title()}')
     rows = c.fetchall()
     return [row[0] for row in rows]
 
@@ -60,16 +78,29 @@ def fill_table_students(c:Cursor, sql_query:str, num_students:int):
     for _ in range(num_students):
         c.execute(sql_query,create_random_students(groups_ids))
 
+def fill_table_contacts_teacher(c:Cursor,sql_query):
+    teacher_ids = get_id(c,'teachers')
+    for ids in teacher_ids:
+        param = (ids, create_mail(),  generate_number(),)
+        c.execute(sql_query,param)
+
+def fill_table_contacts_student(c:Cursor,sql_query):
+    student_ids = get_id(c,'students')
+    for ids in student_ids:
+        param = (ids, create_mail(), generate_number(),)
+        c.execute(sql_query,param)
+
 if __name__ == '__main__':
 
     with MyConnection() as db:
         cursor = db.get_cursor()
-        fill_table_groups(cursor, form_groups, name_groups, 3)
-        fill_table_students(cursor, form_students, 50)
-        fill_table_teachers(cursor, form_teachers,5)
-        fill_table_subject(cursor, form_subject, 8)
-        fill_table_grade(cursor,form_grade)
-
+        # fill_table_groups(cursor, form_groups, name_groups, 3)
+        # fill_table_students(cursor, form_students, 50)
+        # fill_table_teachers(cursor, form_teachers,5)
+        # fill_table_subject(cursor, form_subject, 8)
+        # fill_table_grade(cursor,form_grade)
+        # fill_table_contacts_teacher(cursor, form_contact_teacher)
+        # fill_table_contacts_student(cursor, form_contact_student)
 
 
 
