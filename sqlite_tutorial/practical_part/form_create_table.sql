@@ -40,15 +40,20 @@ CREATE TABLE IF NOT EXISTS Grades (
     FOREIGN KEY (subject_id) REFERENCES Subjects(id)
 );
 
--- table Contacts
-CREATE TABLE IF NOT EXISTS Contacts (
+-- table ContactsStudent
+CREATE TABLE IF NOT EXISTS ContactsStudent (
     id INTEGER PRIMARY KEY,
     student_id INTEGER,
-    teacher_id INTEGER,
     student_email TEXT,
-    teacher_email TEXT,
     student_phone TEXT,
+    FOREIGN KEY (student_id) REFERENCES Students(id)
+);
+
+-- table ContactsTeacher
+CREATE TABLE IF NOT EXISTS ContactsTeacher (
+    id INTEGER PRIMARY KEY,
+    teacher_id INTEGER,
+    teacher_email TEXT,
     teacher_phone TEXT,
-    FOREIGN KEY (student_id) REFERENCES Students(id),
     FOREIGN KEY (teacher_id) REFERENCES Teachers(id)
 );
