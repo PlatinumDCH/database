@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 faker = "^33.0.0"
+phonenumbers = "^8.13.50"
 
 
 [build-system]
