@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.11"
 faker = "^33.0.0"
 phonenumbers = "^8.13.50"
+phone-number-generator = "^0.1.1"
+phone-gen = "^3.0.7"
 
 
 [build-system]

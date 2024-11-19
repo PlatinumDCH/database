@@ -16,6 +16,30 @@ python-dateutil = ">=2.4"
 typing-extensions = "*"
 
 [[package]]
+name = "phone-gen"
+version = "3.0.7"
+description = "International phone number generation"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "phone_gen-3.0.7-py3-none-any.whl", hash = "sha256:de01a28ffcd02ef9df6e64d7b3f1a6974a347a9311b93b4e8bfa5c6dec5c1a3a"},
+    {file = "phone_gen-3.0.7.tar.gz", hash = "sha256:4bf1de8ca7792a0e503be348498c75a0acbd62102abc7455e1f141e7f3a940e1"},
+]
+
+[package.dependencies]
+string-gen = ">=0.1.0"
+
+[[package]]
+name = "phone-number-generator"
+version = "0.1.1"
+description = "All countries phone number generator."
+optional = false
+python-versions = "*"
+files = [
+    {file = "phone_number_generator-0.1.1.tar.gz", hash = "sha256:0cda3244d2d7ae64542ea7ba7fd5fad648bae309b14f19852dda6ac47fa191c2"},
+]
+
+[[package]]
 name = "phonenumbers"
 version = "8.13.50"
 description = "Python version of Google's common library for parsing, formatting, storing and validating international phone numbers."
@@ -52,6 +76,17 @@ files = [
 ]
 
 [[package]]
+name = "string-gen"
+version = "0.1.0"
+description = "String generator by regex"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "string_gen-0.1.0-py3-none-any.whl", hash = "sha256:80784301a09acfb30054e957b172a16b0445f569261790cd2bd53e6474f773e0"},
+    {file = "string_gen-0.1.0.tar.gz", hash = "sha256:65a6bd501e538df58dab647ad40dba16f4d187368d0e4afd415ad2b651f95552"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -65,4 +100,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "f4529ba1a9a79d0621baca5b4bcb4b1dea66e3feeb3342c92cdcd25909555c34"
+content-hash = "45f0cab8d84ca358a72c24e8598d031efb87faf4f35fb16caeb0e41efd44fa75"
