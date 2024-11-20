@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Connection,Cursor
 
 class MyConnection:
-    def __init__(self, name_base:str = 'my_database.db'):
+    def __init__(self, name_base:str = 'chinook.db'):
         self.name_base = name_base
         self.conn: Connection = self.connect()
 
